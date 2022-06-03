@@ -10,13 +10,14 @@ import Planos from './Components/Planos'
 
 function App() {
   const [token, setToken] = React.useState(localStorage.getItem('token'));
+ 
 
   const config={
     Headers:{
       "Authorization": `Bearer ${token}`
     }
   }
-
+  console.log(config)
   const [dadosdoPlano, setDadosdoPlano] = React.useState(null);
   const [dadosEspecificosPlano,setDadosEspecificosPlano]=React.useState(null)
   const [membership, setMembership] = React.useState(localStorage.getItem('membership'));
