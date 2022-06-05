@@ -13,7 +13,7 @@ function App() {
  
 
   const config={
-    Headers:{
+    headers:{
       "Authorization": `Bearer ${token}`
     }
   }

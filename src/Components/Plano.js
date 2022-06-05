@@ -4,41 +4,114 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import UserContext from '../Contexts/UserContext';
 import styled from 'styled-components'
-
+import TelaConfirmaPedido from './TelaConfirmaPedido';
+import { ArrowBackOutline } from 'react-ionicons'
+import { Link, useNavigate } from "react-router-dom"
+import { ClipboardOutline } from 'react-ionicons'
 
 export default function Plano() {
   const token=localStorage.getItem('token');
   const {ID}=useParams();
+  const membershipId=ID;
 
   const dadosUsercontext = useContext(UserContext);
   const {config} = dadosUsercontext;
   const URL_PLANO_CLICADO=`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${ID}`
+
+  const [valoresInput, setValoresInput]=React.useState({
+    membershipId,
+    cardName:'',
+    cardNumber:'',
+    securityNumber:'',
+    expirationDate:''
+  })
+
+  //variaveis de estado:
+  const [dadosdaApi,setDadosdaApi]=React.useState("")
+  const [dadosPerks,setDadosPerks]=React.useState([])
+  const [mostrarModal,setMostrarModal]=React.useState(false)
+  const [carregando,setCarregando]=React.useState(false);
+
+
   console.log(config)
   React.useEffect(()=>{
     const promise=axios.get(URL_PLANO_CLICADO,config);
 
     promise.then((response)=>{
       console.log('funfou');
-     
+      //perks é o obj com id, membership, title e link
+      setDadosdaApi(response.data)
+      setDadosPerks(response.data.perks)
+      console.log(dadosPerks)
+      setCarregando(true)
+
     })
 
     promise.catch(()=>{
       console.log('plano clicado não carregou ')
+      setCarregando(false)
     })
   },[]);
 
-  return (
-    <EstiloPaginaPlanoClicado>
-    <div>Plano Clicado</div>
 
-    <form>
-     <input type="text" placeholder='Nome impresso no cartão'  required/>
-      <input type="number" placeholder='Dígitos do cartão' required/>
-      <input type="number" placeholder='Código de segurança'  required/>
-      <input type="text" placeholder='Validade (mm/aa)' required/>
-      <button type="submit">ASSINAR</button>
-    </form>
-    </EstiloPaginaPlanoClicado>
+    function MudarEstadoModal(e){
+      e.preventDefault();
+      setMostrarModal(true);
+    }
+
+  return (
+    carregando==false? (
+      <p>carregando aqui</p>
+    ):
+    (
+    <EstiloPaginaPlanoClicado>
+         <Link to='/subscriptions'>
+            <ArrowBackOutline
+            color={'#ffffff'} 
+            height="50px"
+            width="50px"
+            position='left'
+            />
+           </Link>
+
+      <div>
+        <img src={dadosdaApi.image}/>
+        <h1>{dadosdaApi.name}</h1>
+      </div>
+
+      <div className='InformaçõesPlano'>
+        <h3>Benefícios</h3>
+        <ol>
+          {dadosPerks.map(
+            (item)=>{
+              const {title,id}=item;
+
+              return(
+                <li key={id}>{title}</li>
+              )
+            }
+          )}
+        </ol>
+      </div>
+
+      <div className='InformaçõesPreco'>
+        <h3>Preco:</h3>
+        <p>R$ {dadosdaApi.price} cobrados mensalmente</p>
+      </div>
+      {mostrarModal ? <TelaConfirmaPedido preco={dadosdaApi.price} nome={dadosdaApi.name} config={config} membershipId={membershipId} mostrarModal={mostrarModal} setMostrarModal={setMostrarModal} valoresInput={valoresInput}/> : ""}
+      
+
+      <form onSubmit={MudarEstadoModal}>
+          <input type="text" placeholder='Nome impresso no cartão'  required value={valoresInput.cardName} onChange={(e)=>setValoresInput({...valoresInput,cardName:e.target.value})}/>
+
+          <input type="number" placeholder='Dígitos do cartão' required value={valoresInput.cardNumber} onChange={(e)=>setValoresInput({...valoresInput,cardNumber:e.target.value})}/>
+
+          <input type="number" placeholder='Código de segurança'  required value={valoresInput.securityNumber} onChange={(e)=>setValoresInput({...valoresInput,securityNumber:e.target.value})}/>
+
+          <input type="text" placeholder='Validade (mm/aa)' required value={valoresInput.expirationDate} onChange={(e)=>setValoresInput({...valoresInput,expirationDate:e.target.value})}/>
+          <button type="submit">ASSINAR</button>
+      </form>
+    </EstiloPaginaPlanoClicado>)
   ) 
   
 }
@@ -79,5 +152,13 @@ const EstiloPaginaPlanoClicado=styled.div`
       margin: 8px 0 25px 0;
       margin-left:25px;
   }
+  h1{
+    color:#FFF;
+  }
+  ion-icon {
+    color: #FFFFFF;
+    font-size: 35px;
+}
+
   }
 `
