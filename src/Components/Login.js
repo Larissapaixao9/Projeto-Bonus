@@ -102,6 +102,7 @@ const EstiloPaginaLogin=styled.div`
   height: 100vh;
   background-color:Black;
   color:#fff;
+  font-family: 'Roboto', sans-serif;
  
 
   img{
@@ -113,7 +114,7 @@ const EstiloPaginaLogin=styled.div`
     color: #666666;
     border: 1px solid #D5D5D5;
     height: 52px;
-    width:90%;
+    width:100%;
     font-size:18px;
     margin-bottom:16px;
     border-radius:8px;
@@ -134,7 +135,7 @@ button{
   align-items:center;
   border-radius: 8px;
   justify-content:center;
-  width:80%;
+  width:100%;
   height: 52px;
 
 }

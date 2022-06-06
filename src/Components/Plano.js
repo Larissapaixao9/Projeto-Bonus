@@ -8,7 +8,8 @@ import TelaConfirmaPedido from './TelaConfirmaPedido';
 import { ArrowBackOutline } from 'react-ionicons'
 import { Link, useNavigate } from "react-router-dom"
 import { ClipboardOutline } from 'react-ionicons'
-
+import prancheta from '../imagens/prancheta.png'
+import dinheiro from '../imagens/dinheiro.png'
 export default function Plano() {
   const token=localStorage.getItem('token');
   const {ID}=useParams();
@@ -66,28 +67,33 @@ export default function Plano() {
     (
     <EstiloPaginaPlanoClicado>
          <Link to='/subscriptions'>
-            <ArrowBackOutline
+            <ArrowBackOutline className='seta'
             color={'#ffffff'} 
             height="50px"
             width="50px"
-            position='left'
+            position={'fixed'}
+            left={'0px'}
+            top={'0px'}
             />
            </Link>
 
-      <div>
+      <Topo>
         <img src={dadosdaApi.image}/>
         <h1>{dadosdaApi.name}</h1>
-      </div>
+      </Topo>
 
       <div className='InformaçõesPlano'>
-        <h3>Benefícios</h3>
+        <Beneficios>
+       
+        <h3>  <img src={prancheta} /> Benefícios</h3>
+        </Beneficios>
         <ol>
           {dadosPerks.map(
             (item)=>{
               const {title,id}=item;
 
               return(
-                <li key={id}>{title}</li>
+                <li key={id}> {title}</li>
               )
             }
           )}
@@ -95,7 +101,7 @@ export default function Plano() {
       </div>
 
       <div className='InformaçõesPreco'>
-        <h3>Preco:</h3>
+        <h3><img src={dinheiro}/> Preco:</h3>
         <p>R$ {dadosdaApi.price} cobrados mensalmente</p>
       </div>
       {mostrarModal ? <TelaConfirmaPedido preco={dadosdaApi.price} nome={dadosdaApi.name} config={config} membershipId={membershipId} mostrarModal={mostrarModal} setMostrarModal={setMostrarModal} valoresInput={valoresInput}/> : ""}
@@ -105,10 +111,12 @@ export default function Plano() {
           <input type="text" placeholder='Nome impresso no cartão'  required value={valoresInput.cardName} onChange={(e)=>setValoresInput({...valoresInput,cardName:e.target.value})}/>
 
           <input type="number" placeholder='Dígitos do cartão' required value={valoresInput.cardNumber} onChange={(e)=>setValoresInput({...valoresInput,cardNumber:e.target.value})}/>
+            <DoisUltimosInputs>
+            <input type="number" placeholder='Código de segurança'  required value={valoresInput.securityNumber} onChange={(e)=>setValoresInput({...valoresInput,securityNumber:e.target.value})}/>
 
-          <input type="number" placeholder='Código de segurança'  required value={valoresInput.securityNumber} onChange={(e)=>setValoresInput({...valoresInput,securityNumber:e.target.value})}/>
-
-          <input type="text" placeholder='Validade (mm/aa)' required value={valoresInput.expirationDate} onChange={(e)=>setValoresInput({...valoresInput,expirationDate:e.target.value})}/>
+<input type="text" placeholder='Validade (mm/aa)' required value={valoresInput.expirationDate} onChange={(e)=>setValoresInput({...valoresInput,expirationDate:e.target.value})}/>
+            </DoisUltimosInputs>
+         
           <button type="submit">ASSINAR</button>
       </form>
     </EstiloPaginaPlanoClicado>)
@@ -127,8 +135,21 @@ const EstiloPaginaPlanoClicado=styled.div`
   height: 100vh;
   background-color:Black;
   color:#fff;
+  font-family: 'Roboto', sans-serif;
+
+  .seta{
+    position:fixed;
+    left:0;
+    top:0;
+    padding:10px;
+  }
 
   form{
+    display:flex;
+    justify-content:center;
+    flex-direction:column;
+    align-items:center;
+    margin:0 auto;
     input{
       width:80%;
       heigth:80%;
@@ -138,6 +159,7 @@ const EstiloPaginaPlanoClicado=styled.div`
       background:#FFF;
       border-radius:8px;
       margin-left:25px;
+      padding:10px;
     }
     button {
       width: 80%;
@@ -152,6 +174,7 @@ const EstiloPaginaPlanoClicado=styled.div`
       margin: 8px 0 25px 0;
       margin-left:25px;
   }
+
   h1{
     color:#FFF;
   }
@@ -161,4 +184,22 @@ const EstiloPaginaPlanoClicado=styled.div`
 }
 
   }
+`
+const Beneficios=styled.div`
+  display:flex;
+  justify-content:center;
+
+`
+const DoisUltimosInputs=styled.div`
+  display:flex;
+  width:90%;
+
+  input{
+    width:10px;
+    padding:10px;
+  }
+`
+const Topo=styled.div`
+  margin-top:80px;
+
 `

@@ -37,16 +37,21 @@ export default function Planos() {
   return (
    
     <EstiloPaginaEscolhaPlanos>
-    <h1>Escolha seu Plano</h1>
+    <TextoEscolherPlano>Escolha seu Plano</TextoEscolherPlano>
     {planos.map((item,index)=>{
       const {id,image,price}=item; //Desestruturação
 
-      return  <div>
-            <Link to={`/subscriptions/${id}`}>
-            <img src={image}/>
-          <span>{price}</span>
-          </Link> 
-        </div>
+      return ( 
+        <Link to={`/subscriptions/${id}`}>
+        <ContainerImagemPreco>
+        
+        <img src={image}/>
+      <Preco>R$ {price}</Preco>
+    
+    </ContainerImagemPreco>
+    </Link> ) 
+      
+           
     
      
     })}
@@ -59,35 +64,48 @@ export default function Planos() {
 const EstiloPaginaEscolhaPlanos=styled.div`
 *box-sizing:border-box;
 
+  height: 100vh;
+  background-color:#000;
   display:flex;
   flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  width: 100vw;
-  height: 100vh;
-  background-color:Black;
-  color:#fff;
+  margin:0 auto;
 
-  h1{
-    margin:0 auto;
-  }
   p{
     color:#fff;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
   }
   div{
-    heigth:180px;
+    height: 120px;
     width:80%;
     border:3px solid #7E7E7E;
     border-radius:12px;
-    margin-bottom:20px;
-    margin-top:20px;
-    padding:10px;
+ 
+    margin: 6px auto;
+    padding:20px;
     cursor:pointer;
     text-decoration:none;
   }
-  span{
-    text-align:center;
-  }
-  
 
+`
+const TextoEscolherPlano=styled.h1`
+    text-align:center;
+    color:#FFF;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+`
+const Preco=styled.span`
+    color:#FFF;
+    position:fixed;
+    right:10%;
+    margin-top:40px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size:24px;
+   
+`
+const ContainerImagemPreco=styled.div`
+
+
+ 
 `

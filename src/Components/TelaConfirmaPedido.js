@@ -60,6 +60,8 @@ align-items: center;
 
   p{
     color:black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
   }
 `
 export const ModalContainer=styled.div`
@@ -90,7 +92,8 @@ margin: 20px 20px;
 background:#FF4791;
 color:#FFF;
 cursor:pointer;
-
+font-family: 'Roboto', sans-serif;
+font-weight: 400;
 
 `
 
@@ -102,7 +105,8 @@ margin: 20px 20px;
 background:#CECECE;
 color:#FFF;
 cursor:pointer;
-
+font-family: 'Roboto', sans-serif;
+font-weight: 400;
 `
 const ModalRodape=styled.div`
   display:flex;

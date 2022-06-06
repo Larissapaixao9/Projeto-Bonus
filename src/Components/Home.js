@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import { BsPersonCircle } from "react-icons/bs";
 import { getByTitle } from '@testing-library/react';
+import profile from '../imagens/profile.png'
 
 export default function Home() {
     const URL_DELETAR_PLANO='https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions'
@@ -28,7 +29,7 @@ export default function Home() {
     <PaginaHome>
         <Topo>
         <img src={image}/>
-        <BsPersonCircle />
+        <img src={profile} />
         </Topo>
 
         <TextoBoasVindas>
@@ -37,7 +38,8 @@ export default function Home() {
 
         <BotaoContainer>
            {perks.map((item)=>
-               <Botao><a href={item.link}>{item.title}</a></Botao>
+          
+          <LinkEstilo href={item.link}> <Botao>{item.title}</Botao></LinkEstilo>
            )}
         </BotaoContainer>
 
@@ -52,56 +54,92 @@ export default function Home() {
 
 export const PaginaHome=styled.div`
 height: 100vh;
-background-color:yellow;
+background-color:#000;
+display:flex;
+flex-direction:column;
+margin:0 auto;
 `
 const Topo=styled.div`
     display:flex;
     justify-content: space-between;
+    padding:25px;
+
+    img:last-child{
+        width:34px;
+        height:34px;
+    }
 `
 
 const TextoBoasVindas=styled.h3`
     text-align:center;
+    color:#FFF;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
 
 `
 const BotaoContainer=styled.div`
     display:flex;
     flex-direction:column;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
 
 `
 const Botao=styled.button`
-width: 299px;
+width: 85%;
 height: 52px;
 border-radius: 8px;
-margin: 20px 20px;
+margin: 5px auto;
 background:#FF4791;
 cursor:pointer;
+color:#FFF;
+font-family: 'Roboto', sans-serif;
+font-weight: 700;
+    a{
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        text-decoration:none;
+        color:#FFF;
+    }
+
+`
+const LinkEstilo=styled.a`
+display:flex;
+flex-direction:column;
+justify-content:center;
+text-decoration:none;
 color:#FFF;
 `
 
 const Rodape=styled.div`
     position:fixed;
-    bottom:0;
-    left:50px;
+    bottom:10px;
     display:flex;
     flex-direction:column;
     justify-content: center;
+    width:100%;
 `
 const BotaoMudarPlano=styled.div`
-width: 299px;
+width:85%;
 height: 52px;
 border-radius: 8px;
 background:#FF4791;
 color:#FFF;
 cursor:pointer;
 text-align:center;
+margin:5px auto;
+font-family: 'Roboto', sans-serif;
+font-weight: 700;
 `
 const BotaoCancelarPlano=styled.div`
-width: 299px;
+width:85%;
 height: 52px;
 border-radius: 8px;
 color:#FFF;
 cursor:pointer;
 background:#FF4747;
-margin-top:10px;
 text-align:center;
+margin:5px auto;
+font-family: 'Roboto', sans-serif;
+font-weight: 700;
 `
